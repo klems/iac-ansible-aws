@@ -1,0 +1,59 @@
+---
+
+#-------------------------------------------------------------------------------------#
+# THIS FILE GATHERS THE CONFIGURATION FOR ALL EC2 INSTANCES WITHIN [PROD] ENVIRONMENT #
+#-------------------------------------------------------------------------------------#
+
+# ec2_key: The name of the SSH key you are using to connect to this instance.
+# ec2_group_id: The security group(s) that your instance will be part of. (Can be a list : "['sg-xxxxxxxx', 'sg-xxxxxxxx']")
+# ec2_type: The type of EC2 instance.
+# ec2_image: The AMI image that will be used to provision this instance.
+# ec2_subnet: The subnet that your instance will be part of.
+# ec2_hdd_mount_point: The mount point you want to use within your instance. (You can have several)
+# ec2_hdd_size : The hard drive size needed by your instance. 
+# ec2_instance_count: The maximum number of the same instance you can have.
+# ec2_instance_name : The name of the instance.
+# ec2_tag_xxx : Add a defined tag to the instance.
+# ec2_private_ip : Add a fixed IP to your EC2 instance. (Verify that it is free of use of course)
+
+provisioning_servers:
+
+  prod_app_database:
+    ec2_key: "name-of-your-aws-ssh-key"
+    ec2_group_id: "sg-xxxxxxxx"
+    ec2_type: "t2.small"
+    ec2_image: "ami-xxxxxxxx"
+    ec2_subnet: "subnet-xxxxxxxx"
+    ec2_region: "eu-west-1"
+    ec2_hdd_mount_point: "/dev/sda1"
+    ec2_hdd_size: "12"
+    ec2_instance_count: "1"
+    ec2_instance_name: "prod-app-database"
+    ec2_tag_application: "prod-app-database"
+    ec2_tag_department: "your-aws-tag"
+    ec2_tag_environment: "prod"
+    ec2_tag_name: "prod-app-database"
+    ec2_tag_owner: "admin@domain.com"
+    ec2_tag_region: "eu-west-1"
+    ec2_tag_role: "app-database"
+    ec2_private_ip: "0.0.0.0"
+
+  prod_app_front:
+    ec2_key: "name-of-your-aws-ssh-key"
+    ec2_group_id: "sg-xxxxxxxx"
+    ec2_type: "t2.small"
+    ec2_image: "ami-xxxxxxxx"
+    ec2_subnet: "subnet-xxxxxxxx"
+    ec2_region: "eu-west-1"
+    ec2_hdd_mount_point: "/dev/sda1"
+    ec2_hdd_size: "12"
+    ec2_instance_count: "1"
+    ec2_instance_name: "prod-app-front"
+    ec2_tag_application: "prod-app-front"
+    ec2_tag_department: "your-aws-tag"
+    ec2_tag_environment: "prod"
+    ec2_tag_name: "prod-app-front"
+    ec2_tag_owner: "admin@domain.com"
+    ec2_tag_region: "eu-west-1"
+    ec2_tag_role: "app-front"
+    ec2_private_ip: "0.0.0.0"
