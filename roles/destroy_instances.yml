@@ -1,0 +1,29 @@
+---
+
+- name: "PLAYBOOK - Destroying all EC2 instances for env ==> [{{ Environment }}]"
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  vars_prompt:
+    - name: "validate"
+      prompt: "WARNING : You are about to destroy all instances within env ==> [{{ Environment }}] (yes/no) ?"
+
+  tasks:
+    - include_vars: group_vars/ec2_{{ Environment }}.yml
+
+    - name: "ROLE - Destroying instance of env ==> [{{ Environment }}]"
+      ec2:
+         state: absent
+         instance_tags:
+            Ansible: true
+            Application: "{{ item.value.ec2_tag_application }}"
+            Department: "{{ item.value.ec2_tag_department }}"
+            Environment: "{{ item.value.ec2_tag_environment }}"
+            Name: "{{ item.value.ec2_tag_name }}"
+            Owner: "{{ item.value.ec2_tag_owner }}"
+            Region: "{{ item.value.ec2_tag_region }}"
+            Role: "{{ item.value.ec2_tag_role }}"
+      register: ec2
+      with_dict: "{{ provisioning_servers }}"
+      when: validate == "yes"

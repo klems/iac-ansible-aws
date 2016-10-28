@@ -1,0 +1,24 @@
+---
+
+- name: "PLAYBOOK - Starting all EC2 instances for env ==> [{{ Environment }}]"
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - include_vars: group_vars/ec2_{{ Environment }}.yml
+
+    - name: "ROLE - Starting instance of env ==> [{{ Environment }}]"
+      ec2:
+         state: running
+         instance_tags:
+            Ansible: true
+            Application: "{{ item.value.ec2_tag_application }}"
+            Department: "{{ item.value.ec2_tag_department }}"
+            Environment: "{{ item.value.ec2_tag_environment }}"
+            Name: "{{ item.value.ec2_tag_name }}"
+            Owner: "{{ item.value.ec2_tag_owner }}"
+            Region: "{{ item.value.ec2_tag_region }}"
+            Role: "{{ item.value.ec2_tag_role }}"
+      register: ec2
+      with_dict: "{{ provisioning_servers }}"

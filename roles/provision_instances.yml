@@ -1,0 +1,37 @@
+---
+
+- name: "PLAYBOOK - Provisioning all EC2 instances needed for env ==> [{{ Environment }}]"
+  hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+    - include_vars: group_vars/ec2_{{ Environment }}.yml
+
+    - name: "ROLE - Provisioning instance of env ==> [{{ Environment }}]"
+      ec2:
+         key_name: "{{ item.value.ec2_key }}"
+         group_id: "{{ item.value.ec2_group_id }}"
+         instance_type: "{{ item.value.ec2_type }}"
+         image: "{{ item.value.ec2_image }}"
+         vpc_subnet_id: "{{ item.value.ec2_subnet }}"
+         private_ip: "{{ item.value.ec2_private_ip }}"
+         volumes:
+         - device_name: "{{ item.value.ec2_hdd_mount_point }}"
+           volume_size: "{{ item.value.ec2_hdd_size }}"
+         wait: true
+         region: "{{ item.value.ec2_region }}"
+         exact_count: "{{ item.value.ec2_instance_count }}"
+         count_tag:
+            Name: "{{ item.value.ec2_instance_name }}"
+         instance_tags:
+            Ansible: true
+            Application: "{{ item.value.ec2_tag_application }}"
+            Department: "{{ item.value.ec2_tag_department }}"
+            Environment: "{{ item.value.ec2_tag_environment }}"
+            Name: "{{ item.value.ec2_tag_name }}"
+            Owner: "{{ item.value.ec2_tag_owner }}"
+            Region: "{{ item.value.ec2_tag_region }}"
+            Role: "{{ item.value.ec2_tag_role }}"
+      register: ec2
+      with_dict: "{{ provisioning_servers }}"
