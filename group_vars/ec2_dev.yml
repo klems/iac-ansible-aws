@@ -21,7 +21,7 @@ provisioning_servers:
   dev_app_database:
     ec2_key: "name-of-your-aws-ssh-key"
     ec2_group_id: "sg-xxxxxxxx"
-    ec2_type: "t2.small"
+    ec2_type: "t2.micro"
     ec2_image: "ami-xxxxxxxx"
     ec2_subnet: "subnet-xxxxxxxx"
     ec2_region: "eu-west-1"
@@ -41,7 +41,7 @@ provisioning_servers:
   dev_app_front:
     ec2_key: "name-of-your-aws-ssh-key"
     ec2_group_id: "sg-xxxxxxxx"
-    ec2_type: "t2.small"
+    ec2_type: "t2.micro"
     ec2_image: "ami-xxxxxxxx"
     ec2_subnet: "subnet-xxxxxxxx"
     ec2_region: "eu-west-1"
